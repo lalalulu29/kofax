@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Класс обертка над логикой вычисления вырожения
+ * A wrapper class for expression evaluation logic.
  */
 public class ExpressionEvaluator {
     private final AstNode node;
@@ -18,7 +18,7 @@ public class ExpressionEvaluator {
     }
 
     /**
-     * Метод для подстановки случайных значений в переменные
+     * Method for assigning random values to variables.
      */
     public void assignRandomValuesToVariables() {
         Random random = new Random();
@@ -30,25 +30,25 @@ public class ExpressionEvaluator {
     }
 
     /**
-     * Метод для вычисления значения ноды
-     * @return значение ноды
+     * Method for evaluating the value of the node.
+     * @return the node's value.
      */
     public int evaluate() {
         return node.evaluate(variablesMap);
     }
 
     /**
-     * Метод для вывода значений переменных
+     * Method for printing variable values.
      */
     public void printVariables() {
         if (!variablesMap.isEmpty()) {
-            System.out.println("Значение переменных:");
+            System.out.println("Variable values:");
             variablesMap.forEach((name, value) -> System.out.println(name + ": " + value));
         }
     }
 
     /**
-     * Метод для печати ноды
+     * Method for printing the AST node.
      */
     public void printAst() {
         node.print("");

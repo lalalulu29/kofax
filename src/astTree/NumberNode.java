@@ -3,7 +3,7 @@ package astTree;
 import java.util.Map;
 
 /**
- * Класс- нода числа в выражении
+ * Class representing a number node in the expression.
  */
 public class NumberNode extends AstNode {
     private final int value;

@@ -3,7 +3,7 @@ package utils;
 import java.util.Scanner;
 
 /**
- * Класс для получения данных от пользователя через терминал
+ * Class for obtaining input from the user via the terminal.
  */
 public class UserInputHandler {
     private final Scanner scanner;
@@ -13,25 +13,25 @@ public class UserInputHandler {
     }
 
     /**
-     * Метод для получения арифмитического выражения из терминала пользователя
+     * Method for getting an arithmetic expression from the user via the terminal.
      *
-     * @return арифметическое выражение ввиде строки
+     * @return the arithmetic expression as a string
      */
     public String getExpression() {
-        System.out.print("Введите арифметическое выражение с (без) переменными: ");
+        System.out.print("Enter an arithmetic expression with (or without) variables: ");
         return scanner.nextLine();
     }
 
     /**
-     * Метод для вывода подсказки пользователю, после получения от пользователя арифм. выражения
+     * Method for displaying a prompt to the user after receiving the arithmetic expression.
      *
-     * @return Команда от пользователя
+     * @return the user's command
      */
     public String getCommand() {
-        System.out.println("\nВведите команды или новые значения для переменных (например, x = 4):\n" +
-                "Поддерживаемые команды:\n" +
-                "calc - занова произвести вычисление\n" +
-                "print - вывести AST дерево данного арифметического выражения\n");
+        System.out.println("\nEnter commands or new values for variables (e.g., x = 4):\n" +
+                "Supported commands:\n" +
+                "calc - re-evaluate the expression\n" +
+                "print - print the AST of the given arithmetic expression\n");
 
         return scanner.nextLine();
     }

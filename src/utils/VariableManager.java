@@ -3,7 +3,7 @@ package utils;
 import java.util.Map;
 
 /**
- * Класс для работы с переменными
+ * Class for managing variables.
  */
 public class VariableManager {
     private final Map<String, Integer> variablesMap;
@@ -13,32 +13,32 @@ public class VariableManager {
     }
 
     /**
-     * Метод для обновления значений переменных
+     * Method for updating the values of variables.
      *
-     * @param input строка - новое значение для переменной
-     * @throws ArithmeticException исключение о некорректности входных данных
+     * @param input a string containing the new value for the variable
+     * @throws ArithmeticException exception for invalid input
      */
     public void updateVariable(String input) throws ArithmeticException {
         String[] parts = input.split("=");
 
         if (parts.length != 2) {
-            throw new ArithmeticException("Некорректный ввод переменной. Ожидалось: имя = значение.");
+            throw new ArithmeticException("Invalid variable input. Expected format: name = value.");
         }
 
         String variableName = parts[0].trim();
         String variableValueStr = parts[1].trim();
 
         if (!variablesMap.containsKey(variableName)) {
-            throw new ArithmeticException("Переменная " + variableName + " не найдена.");
+            throw new ArithmeticException("Variable " + variableName + " not found.");
         }
 
         try {
             int variableValue = Integer.parseInt(variableValueStr);
             SolveExpression.validateNumber(variableValue);
             variablesMap.put(variableName, variableValue);
-            System.out.println("Новое значение переменной " + variableName + ": " + variableValue);
+            System.out.println("New value for variable " + variableName + ": " + variableValue);
         } catch (NumberFormatException ex) {
-            throw new ArithmeticException("Значение переменной должно быть целым числом.");
+            throw new ArithmeticException("Variable value must be an integer.");
         }
     }
 }

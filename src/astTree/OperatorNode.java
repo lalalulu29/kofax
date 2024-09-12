@@ -3,7 +3,7 @@ package astTree;
 import java.util.Map;
 
 /**
- * Класс- нода оператора выражения
+ * Class representing an operator node in the expression.
  */
 public class OperatorNode extends AstNode {
     private final char operator;

@@ -11,24 +11,24 @@ import java.util.Map;
 import java.util.Stack;
 
 /**
- * Класс для решения арифметического выражения
+ * Class for solving an arithmetic expression.
  */
 public class SolveExpression {
 
     private final static List<Character> SUPPORTED_ARITHMETIC_OPERATORS = Arrays.asList('+', '-', '*', '/');
 
     /**
-     * Метод для оценки выражения
+     * Method for evaluating the expression.
      *
-     * @param expression строка, представляющая из себя арифметическое выражение
-     * @return результат решения арифметического выражения
-     * @throws ArithmeticException при неверном формате выражения
+     * @param expression the string representing an arithmetic expression
+     * @return the result of solving the arithmetic expression
+     * @throws ArithmeticException if the expression format is invalid
      */
     public static AstNode parse(String expression, Map<String, Integer> variablesSet) throws ArithmeticException {
         expression = expression.replaceAll(" ", "");
 
         if (expression.isEmpty()) {
-            throw new ArithmeticException("Выражение не должно быть пустым!");
+            throw new ArithmeticException("The expression must not be empty!");
         }
 
         Stack<AstNode> numbers = new Stack<>();
@@ -41,7 +41,7 @@ public class SolveExpression {
                 StringBuilder sb = new StringBuilder();
                 while (i < expression.length()) {
                     if (Character.isLetter(expression.charAt(i))) {
-                        throw new ArithmeticException("Наименование переменной не может начинаться с числа!");
+                        throw new ArithmeticException("Variable names cannot start with a digit!");
                     } else if (!Character.isDigit(expression.charAt(i))) {
                         break;
                     }
@@ -68,63 +68,63 @@ public class SolveExpression {
             } else if (ch == ')') {
                 while (!operators.isEmpty() && operators.peek() != '(') {
                     if (numbers.size() < 2) {
-                        throw new ArithmeticException("Некорректное выражение: недостаточно операндов для операции!");
+                        throw new ArithmeticException("Invalid expression: not enough operands for the operation!");
                     }
                     numbers.push(buildOperatorNode(operators.pop(), numbers.pop(), numbers.pop()));
                 }
                 if (operators.isEmpty() || operators.peek() != '(') {
-                    throw new ArithmeticException("Некорректное выражение: пропущена открывающая скобка!");
+                    throw new ArithmeticException("Invalid expression: missing opening parenthesis!");
                 }
                 operators.pop();
 
             } else if (isOperator(ch)) {
                 if (numbers.isEmpty()) {
-                    throw new ArithmeticException("Некорректное выражение: оператор '" + ch + "' без операндов!");
+                    throw new ArithmeticException("Invalid expression: operator '" + ch + "' without operands!");
                 }
                 while (!operators.isEmpty() && precedence(ch) <= precedence(operators.peek())) {
                     if (numbers.size() < 2) {
-                        throw new ArithmeticException("Некорректное выражение: недостаточно операндов для операции!");
+                        throw new ArithmeticException("Invalid expression: not enough operands for the operation!");
                     }
                     numbers.push(buildOperatorNode(operators.pop(), numbers.pop(), numbers.pop()));
                 }
                 operators.push(ch);
 
             } else {
-                throw new ArithmeticException("Недопустимый символ в выражении: " + ch);
+                throw new ArithmeticException("Invalid character in the expression: " + ch);
             }
         }
 
         while (!operators.isEmpty()) {
             if (numbers.size() < 2) {
-                throw new ArithmeticException("Некорректное выражение: недостаточно операндов для операции!");
+                throw new ArithmeticException("Invalid expression: not enough operands for the operation!");
             }
             numbers.push(buildOperatorNode(operators.pop(), numbers.pop(), numbers.pop()));
         }
 
         if (numbers.size() != 1) {
-            throw new ArithmeticException("Некорректное выражение: неверное количество операндов и операторов.");
+            throw new ArithmeticException("Invalid expression: incorrect number of operands and operators.");
         }
 
         return numbers.pop();
     }
 
     /**
-     * Построение узла для оператора
+     * Builds an operator node.
      *
-     * @param operator оператор ноды
-     * @param right правый наслденик ноды
-     * @param left левый наследний ноды
-     * @return нода AST деерва
+     * @param operator the operator of the node
+     * @param right the right child of the node
+     * @param left the left child of the node
+     * @return an AST node
      */
     private static AstNode buildOperatorNode(char operator, AstNode right, AstNode left) {
         return new OperatorNode(operator, left, right);
     }
 
     /**
-     * Метод для определения приоритета операций
+     * Method for determining the precedence of operations.
      *
-     * @param operator оператор
-     * @return приоритет операции
+     * @param operator the operator
+     * @return the precedence of the operation
      */
     private static int precedence(char operator) {
         switch (operator) {
@@ -140,25 +140,25 @@ public class SolveExpression {
     }
 
     /**
-     * Метод для проверки, является ли символ оператором
+     * Method to check if a character is an operator.
      *
-     * @param ch символ
-     * @return булево значение, является ли входной символ оператором
+     * @param ch the character
+     * @return a boolean indicating whether the character is an operator
      */
     private static boolean isOperator(char ch) {
         return SUPPORTED_ARITHMETIC_OPERATORS.contains(ch);
     }
 
     /**
-     * Метод для валидации числа, соответствует ли оно условиям задачи
-     * @param number число
+     * Method for validating a number based on problem constraints.
+     * @param number the number
      */
     public static void validateNumber(int number) {
         if (number == 0) {
-            throw new ArithmeticException("0 не является положительным числом!");
+            throw new ArithmeticException("0 is not a positive number!");
         }
         if (number < 0 || number > 65535) {
-            throw new ArithmeticException("Число размерности больше 16 бит");
+            throw new ArithmeticException("Number exceeds 16-bit range");
         }
     }
 }

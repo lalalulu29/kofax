@@ -7,7 +7,6 @@ import utils.VariableManager;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class Main {
 
     public static void main(String[] args) {
@@ -24,34 +23,34 @@ public class Main {
         VariableManager variableManager = new VariableManager(variablesMap);
 
         evaluator.assignRandomValuesToVariables();
-        System.out.println("Результат вычисления: " + evaluator.evaluate());
+        System.out.println("Calculation result: " + evaluator.evaluate());
         evaluator.printVariables();
 
         processCommands(inputHandler, evaluator, variableManager);
     }
 
     /**
-     * Метод для безопасного парсинга выражения
+     * Method for safely parsing the expression.
      *
-     * @param expression   выражение
-     * @param variablesMap map-а содержащая в себе перменные и их значения
-     * @return Ast нода
+     * @param expression   the expression
+     * @param variablesMap the map containing variables and their values
+     * @return the AST node
      */
     private static AstNode parseExpression(String expression, Map<String, Integer> variablesMap) {
         try {
             return SolveExpression.parse(expression, variablesMap);
         } catch (ArithmeticException ex) {
-            System.out.println("Ошибка в выражении: " + ex.getMessage() + ". Попробуйте снова.");
+            System.out.println("Error in expression: " + ex.getMessage() + ". Please try again.");
             return null;
         }
     }
 
     /**
-     * Метод обработки команд от пользователя
+     * Method for processing user commands.
      *
-     * @param inputHandler    параметр для получение данных от пользователя
-     * @param evaluator       параметр для вычисления выражения
-     * @param variableManager параметр для работы с переменными
+     * @param inputHandler    parameter for getting user input
+     * @param evaluator       parameter for evaluating the expression
+     * @param variableManager parameter for managing variables
      */
     private static void processCommands(UserInputHandler inputHandler, ExpressionEvaluator evaluator,
                                         VariableManager variableManager) {
@@ -60,7 +59,7 @@ public class Main {
         switch (command) {
             case "calc":
                 int result = evaluator.evaluate();
-                System.out.println("Результат вычисления: " + result + "\n");
+                System.out.println("Calculation result: " + result + "\n");
                 processCommands(inputHandler, evaluator, variableManager);
                 break;
             case "print":
@@ -73,7 +72,7 @@ public class Main {
                     processCommands(inputHandler, evaluator, variableManager);
                 } catch (ArithmeticException ex) {
                     System.out.println(
-                            ex.getMessage() != null ? ex.getMessage() : "Некорректная команда или переменная.");
+                            ex.getMessage() != null ? ex.getMessage() : "Invalid command or variable.");
                     processCommands(inputHandler, evaluator, variableManager);
                 }
         }

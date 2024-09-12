@@ -3,7 +3,7 @@ package astTree;
 import java.util.Map;
 
 /**
- * Класс- нода переменной выражения
+ * Class representing a variable node in the expression.
  */
 public class VariableNode extends AstNode {
     private final String name;
